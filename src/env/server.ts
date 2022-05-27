@@ -1,4 +1,4 @@
-const SERVER_PORT = process.env.SERVER_PORT
+const SERVER_PORT = process.env.PORT
 
 
 export { SERVER_PORT };
