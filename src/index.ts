@@ -10,4 +10,4 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(router)
 
-app.listen(SERVER_PORT, () => console.log('storage api running at: ' + SERVER_PORT));
+app.listen(SERVER_PORT || 3000, () => console.log('storage api running at: ' + SERVER_PORT || 3000));
