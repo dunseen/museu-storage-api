@@ -1,0 +1,17 @@
+version: '3.3'
+
+services:
+  api:
+    image: node:16.14.0
+    restart: unless-stopped
+    container_name: storage-api
+    working_dir: /usr/src/app
+    environment:
+      - TZ=America/Sao_Paulo
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+      - 9229:9229
+    volumes:
+      - ./:/usr/src/app
+      - ./.volumes/logs:/root/.npm/_logs
+    command: "npm && npm run start:dev"

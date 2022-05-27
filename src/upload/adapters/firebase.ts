@@ -1,10 +1,10 @@
 import { Bucket } from '@google-cloud/storage';
-import admin, { ServiceAccount } from 'firebase-admin';
+import admin from 'firebase-admin';
 import { customAlphabet, urlAlphabet } from 'nanoid'
 
 import { client_email, private_key, project_id } from '../../env/firebase';
 
-import { ImageUploader } from "../interfaces/image-uploader";
+import { ImageUploader } from "../interfaces/file-uploader";
 import { UploadDto } from './upload-dto';
 
 
@@ -61,6 +61,12 @@ export class FirebaseUploader implements ImageUploader {
     })
 
 
+  }
+
+  async delete(filePath: string): Promise<void> {
+    await this.bucket.file(filePath).delete();
+
+    console.log(`${filePath} deleted`);
   }
 }
 

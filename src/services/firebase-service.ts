@@ -1,9 +1,5 @@
 import { FirebaseUploader } from "../upload/adapters/firebase"
-
-interface IFile extends Express.Multer.File {
-    url?: string
-}
-
+import { IFile } from "../upload/interfaces/custom-file"
 class FirebaseService {
     constructor(
         private readonly firebase = new FirebaseUploader()
@@ -15,6 +11,12 @@ class FirebaseService {
 
     async multipleUpload(file: IFile, project: string, folder: string) {
         return await this.firebase.upload(file, project, folder)
+    }
+
+    async delete(fileName: string, project: string, folder: string) {
+        const url = `${project}/${folder}/${fileName}`
+
+        return await this.firebase.delete(url);
     }
 }
 
