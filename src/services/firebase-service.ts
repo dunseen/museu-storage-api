@@ -1,0 +1,21 @@
+import { FirebaseUploader } from "../upload/adapters/firebase"
+
+interface IFile extends Express.Multer.File {
+    url?: string
+}
+
+class FirebaseService {
+    constructor(
+        private readonly firebase = new FirebaseUploader()
+    ) { }
+
+    async execute(files: IFile[], project: string, folder: string) {
+        return await Promise.all(files.map((file) => this.multipleUpload(file, project, folder)))
+    }
+
+    async multipleUpload(file: IFile, project: string, folder: string) {
+        return await this.firebase.upload(file, project, folder)
+    }
+}
+
+export default new FirebaseService()
