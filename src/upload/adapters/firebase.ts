@@ -16,9 +16,9 @@ export class FirebaseUploader implements ImageUploader {
   constructor() {
     this.client = admin.initializeApp({
       credential: admin.credential.cert({
-        clientEmail: client_email,
-        privateKey: private_key,
-        projectId: project_id
+        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+        privateKey: process.env.FIREBASE_PRIVATE_KEY,
+        projectId: process.env.FIREBASE_PROJECT_ID
       }),
       storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
     }),
