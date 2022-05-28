@@ -31,6 +31,12 @@
 > Em seguida é necessário instalar as dependências do projeto:
 
 ```sh
+# clonando repositório
+git clone https://github.com/dunseen/museu-storage-api.git
+
+# acessando o projeto
+cd museu-storage-api
+
 # instalando dependências
 yarn ou npm i
 
