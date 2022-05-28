@@ -1,9 +1,9 @@
 export class UploadDto {
-    id: string
+    fileName: string
     url: string;
 
-    constructor({ id, url }: UploadDto) {
-        this.id = id;
+    constructor({ fileName, url }: UploadDto) {
+        this.fileName = fileName;
         this.url = url
     }
 

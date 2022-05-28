@@ -2,7 +2,8 @@ import { Bucket } from '@google-cloud/storage';
 import admin from 'firebase-admin';
 import { customAlphabet, urlAlphabet } from 'nanoid'
 
-import { client_email, private_key, project_id } from '../../env/firebase';
+import { client_email, private_key, project_id, storageBucket } from '../../env/firebase';
+import { ImageOptimizer } from '../../services/image-optimizer';
 
 import { ImageUploader } from "../interfaces/file-uploader";
 import { UploadDto } from './upload-dto';
@@ -13,14 +14,14 @@ export class FirebaseUploader implements ImageUploader {
   private client: admin.app.App;
   private bucket: Bucket;
 
-  constructor() {
+  constructor(private readonly optimizer = new ImageOptimizer()) {
     this.client = admin.initializeApp({
       credential: admin.credential.cert({
-        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-        privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-        projectId: process.env.FIREBASE_PROJECT_ID
+        clientEmail: client_email,
+        privateKey: private_key?.replace(/\\n/g, '\n'),
+        projectId: project_id
       }),
-      storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+      storageBucket: storageBucket,
     }),
       this.bucket = this.client.storage().bucket()
   }
@@ -53,11 +54,13 @@ export class FirebaseUploader implements ImageUploader {
 
     })
 
-    stream.end(multerFile.buffer)
+    const buffer = await this.optimizer.optimize(multerFile)
+
+    stream.end(buffer)
 
     return new UploadDto({
-      id: fileName,
-      url: `https://storage.googleapis.com/${process.env.FIREBASE_STORAGE_BUCKET}/${path}`,
+      fileName,
+      url: `https://storage.googleapis.com/${storageBucket}/${path}`,
     })
 
 

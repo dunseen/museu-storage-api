@@ -1,8 +1,9 @@
 import { FirebaseUploader } from "../upload/adapters/firebase"
 import { IFile } from "../upload/interfaces/custom-file"
+import { ImageOptimizer } from "./image-optimizer"
 class FirebaseService {
     constructor(
-        private readonly firebase = new FirebaseUploader()
+        private readonly firebase = new FirebaseUploader(),
     ) { }
 
     async execute(files: IFile[], project: string, folder: string) {
@@ -10,6 +11,7 @@ class FirebaseService {
     }
 
     async multipleUpload(file: IFile, project: string, folder: string) {
+
         return await this.firebase.upload(file, project, folder)
     }
 
