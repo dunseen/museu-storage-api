@@ -10,5 +10,10 @@ const PORT = SERVER_PORT || 3001;
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(router)
+app.get('/', (req, res) => {
+    return res.json({
+        status: 'its working =)'
+    });
+})
 
 app.listen(PORT, () => console.log('storage api running at: ' + PORT));
