@@ -1,12 +1,17 @@
 import 'dotenv/config';
+import cors from 'cors'
+
 import express from 'express';
 
 import { router } from './routes';
 import { SERVER_PORT } from './env/server'
 
+
+
 const app = express();
 const PORT = SERVER_PORT || 3001;
 
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(router)
